@@ -1,0 +1,12 @@
+[package]
+name = "blockchain-test"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+wasm-bindgen = "0.2.95"
+sha2 = "0.11.0-pre.4"
+hex = "0.4.3"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
