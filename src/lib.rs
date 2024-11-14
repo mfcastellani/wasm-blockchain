@@ -1,4 +1,5 @@
 use wasm_bindgen::prelude::*;
+use web_sys::console;
 use sha2::{Sha256, Digest};
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::collections::HashMap;
@@ -114,12 +115,14 @@ impl Blockchain {
 }
 
 #[wasm_bindgen]
-pub fn validate() -> String {
+pub fn validate()  {
+    console::log_1(&"Starting blockchain".into());
+
     let mut blockchain = Blockchain::new();
     let mut transaction_id = 1;
-    let mut return_string = "Starting blockchain \n".to_string();
 
     for block_id in 1..=20 {
+        console::log_1(&"Adding transactions".into());
         let transactions: Vec<Transaction> = (0..5)
             .map(|_| {
                 let transaction = Transaction {
@@ -132,16 +135,14 @@ pub fn validate() -> String {
                 transaction
             })
             .collect();
-
+        console::log_1(&"Adding block".into());
         blockchain.add_block(transactions);
-        return_string.push_str(format!("Added block with ID: {}", block_id).as_str());
+        console::log_1(&format!("Added block with ID: {}", block_id).into());
     }
 
     if blockchain.validate_chain() {
-        return_string.push_str("The blockchain is valid.");
+        console::log_1(&"The blockchain is valid.".into());
     } else {
-        return_string.push_str("The blockchain is not valid.");
+        console::log_1(&"The blockchain is not valid.".into());
     }
-
-    return_string.to_string()
 }
